@@ -17,7 +17,6 @@ import org.testng.annotations.BeforeSuite;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestBase {
-
 	/*
 	 * Initializing WebDriver Properties Logs ExtentReports DB Excel Mail
 	 */
@@ -26,8 +25,6 @@ public class TestBase {
 	public static Properties config = new Properties();
 	public static Properties or = new Properties();
 	FileInputStream fis;
-	
-	
 
 	@BeforeMethod
 
@@ -53,20 +50,18 @@ public class TestBase {
 			if (config.getProperty("browser").equals("chrome")) {
 				WebDriverManager.chromedriver().setup();
 				driver = new ChromeDriver();
-			
 
-			}
-			else if(config.getProperty("browser").equals("firefox")) {	
+			} else if (config.getProperty("browser").equals("firefox")) {
 				WebDriverManager.firefoxdriver().setup();
 				driver = new FirefoxDriver();
-				
+
 			}
-			
-			else if(config.getProperty("browser").equals("edge")) {
+
+			else if (config.getProperty("browser").equals("edge")) {
 				WebDriverManager.edgedriver().setup();
 				driver = new EdgeDriver();
 			}
-			
+
 			try {
 				fis = new FileInputStream(
 						System.getProperty("user.dir") + "/src/test/resources/properties/OR.properties");
@@ -74,29 +69,30 @@ public class TestBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			try {
 				or.load(fis);
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-		
+
 		driver.get(config.getProperty("testsiteurl"));
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.parseInt(config.getProperty("implicitWait"))));
+		driver.manage().timeouts()
+				.implicitlyWait(Duration.ofSeconds(Integer.parseInt(config.getProperty("implicitWait"))));
 
 	}
 
 	@AfterMethod
-	public void tearDown() {	
-		if (driver !=null) {
+	public void tearDown() {
+		if (driver != null) {
 			driver.quit();
 			driver = null;
-			
+
 		}
 	}
 
